@@ -1,0 +1,26 @@
+{
+  "name": "nodeexpressdbtutorial",
+  "version": "1.0.0",
+  "description": "tutorial",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bradleydion/nodeexpressdbtutorial.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bradleydion/nodeexpressdbtutorial/issues"
+  },
+  "homepage": "https://github.com/Bradleydion/nodeexpressdbtutorial#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "knex": "^2.3.0",
+    "nodemon": "^2.0.19",
+    "sqlite3": "^5.0.11"
+  }
+}
