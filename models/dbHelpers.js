@@ -8,10 +8,12 @@ module.exports = {
   findById,
   remove,
   update,
+  addComment,
+  findCommentById,
 };
 async function add(blogPost) {
   const [id] = await db("blog").insert(blogPost);
-  return id;
+  return findById(id);
 }
 function findAll() {
   return db("blog");
@@ -29,4 +31,12 @@ function update(id, changes) {
     .then(() => {
       return findById(id);
     });
+}
+function findCommentById(id) {
+  return db("comments").where({ id }).first();
+}
+
+async function addComment(comment, blog_id) {
+  const [id] = await db("comments").where({ blog_id }).insert(comment);
+  return findByCommentById(id);
 }

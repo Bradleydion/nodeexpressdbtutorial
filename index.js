@@ -73,6 +73,37 @@ server.patch("/api/blog/:id", (req, res) => {
     });
 });
 
+server.post("/api/blog/:id/comments", (req, res) => {
+  const { id } = req.params;
+  const comment = req.body;
+  if (!comment.blog_id) {
+    comment["blog_id"] = parseInt(id, 10);
+  }
+  Blog.findById(id)
+    .then((blog) => {
+      if (!blog) {
+        res.status(404).json({ message: "blog post not found" });
+      }
+      // check for all required fields
+      if (!comment.Sender || !comment.Comment) {
+        res
+          .status(400)
+          .json({ message: "must provide sender and comment values" });
+      }
+      Blog.addComment(comment, blog_id).then((comment) => {
+        if (comment) {
+          res.status(200).json(comment);
+        }
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "failed to add comment" });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "error finding blog" });
+    });
+});
+
 server.listen(PORT, () => {
   console.log(`server running on port ${PORT}`);
 });
