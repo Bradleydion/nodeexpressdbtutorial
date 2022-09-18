@@ -38,5 +38,5 @@ function findCommentById(id) {
 
 async function addComment(comment, blog_id) {
   const [id] = await db("comments").where({ blog_id }).insert(comment);
-  return findByCommentById(id);
+  return findCommentById(id);
 }

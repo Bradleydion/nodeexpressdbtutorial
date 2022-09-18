@@ -90,14 +90,14 @@ server.post("/api/blog/:id/comments", (req, res) => {
           .status(400)
           .json({ message: "must provide sender and comment values" });
       }
-      Blog.addComment(comment, blog_id).then((comment) => {
+      Blog.addComment(comment, id).then((comment) => {
         if (comment) {
           res.status(200).json(comment);
         }
       });
     })
     .catch((err) => {
-      res.status(500).json({ message: "failed to add comment" });
+      res.status(500).json({ message: `failed to add comment ${err}` });
     })
     .catch((err) => {
       res.status(500).json({ message: "error finding blog" });
