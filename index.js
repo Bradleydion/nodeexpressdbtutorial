@@ -103,6 +103,33 @@ server.post("/api/blog/:id/comments", (req, res) => {
       res.status(500).json({ message: "error finding blog" });
     });
 });
+server.get("/api/blog/:id/comments", (req, res) => {
+  const { id } = req.params;
+  Blog.findBlogComments(id)
+    .then((blog) => {
+      res.status(200).json(blog);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: `Error pulling comments ${err}` });
+    });
+});
+
+server.delete("/api/comments/:id", (req, res) => {
+  const { id } = req.params;
+  Blog.removeComment(id)
+    .then((count) => {
+      if (count > 0) {
+        res.status(200).json({
+          message: `Comment with id ${id} has been successfully deleted`,
+        });
+      } else {
+        res.status(404).json({ message: "No comment with that id" });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({ message: `Unable to delete message ${error}` });
+    });
+});
 
 server.listen(PORT, () => {
   console.log(`server running on port ${PORT}`);

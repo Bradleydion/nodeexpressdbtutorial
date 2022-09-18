@@ -10,6 +10,8 @@ module.exports = {
   update,
   addComment,
   findCommentById,
+  findBlogComments,
+  removeComment,
 };
 async function add(blogPost) {
   const [id] = await db("blog").insert(blogPost);
@@ -35,8 +37,24 @@ function update(id, changes) {
 function findCommentById(id) {
   return db("comments").where({ id }).first();
 }
+function findBlogComments(blog_id) {
+  return db("blog")
+    .join("comments", "blog.id", "comments.blog_id")
+    .select(
+      "blog.id as BlogID",
+      "blog.title as BlogTitle",
+      "comments.id as CommentId",
+      "comments.Sender as Commenter",
+      "comments.Comment as Comment"
+    )
+    .where({ blog_id });
+}
 
 async function addComment(comment, blog_id) {
   const [id] = await db("comments").where({ blog_id }).insert(comment);
   return findCommentById(id);
+}
+
+function removeComment(id) {
+  return db("comments").where({ id }).del();
 }
