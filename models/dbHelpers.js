@@ -13,7 +13,23 @@ module.exports = {
   findCommentById,
   findBlogComments,
   removeComment,
+  addUser,
+  findAllUsers,
+  findUserByUsername,
 };
+
+async function addUser(user) {
+  return await db(users).insert(user, ["id", "username"]);
+}
+
+function findAllUsers() {
+  return db("users");
+}
+
+function findUserByUsername(username) {
+  return db("users").where({ username }).first();
+}
+
 async function add(blogPost) {
   const [id] = await db("blog").insert(blogPost);
   return findById(id);
