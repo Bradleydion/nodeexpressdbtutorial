@@ -19,7 +19,7 @@ module.exports = {
 };
 
 async function addUser(user) {
-  return await db(users).insert(user, ["id", "username"]);
+  return await db("users").insert(user, ["id", "username"]);
 }
 
 function findAllUsers() {
