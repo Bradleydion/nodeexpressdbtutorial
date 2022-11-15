@@ -1,4 +1,7 @@
 const express = require("express");
+const morgan = require("morgan");
+const helmet = require("helmet");
+const cors = require("cors");
 const session = require("express-session");
 const blogRouter = require("../Routes/blog-routes");
 const commentsRouter = require("../Routes/comments-routes");
@@ -6,6 +9,9 @@ const usersRouter = require("../Routes/users-route");
 const authRouter = require("../Auth/auth-routs");
 const restricted = require("../Auth/middleware");
 const server = express();
+server.use(helmet()); //This will prevent headers from giving away your stack, defense against hacks
+server.use(morgan("dev")); //reports server actions
+server.use(cors());
 const sessionConfig = {
   name: "monster", // name of the cookie
   secret: process.env.SECRET,
